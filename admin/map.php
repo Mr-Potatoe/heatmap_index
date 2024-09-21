@@ -14,7 +14,7 @@
     </header>
   
     <div id="map-container">
-        <img id="base-map" src="../map.png" alt="Campus Map">
+        <img id="base-map" src="../assets/map.png" alt="Campus Map">
         <canvas id="heatmap-overlay"></canvas>
     </div>
 </body>
