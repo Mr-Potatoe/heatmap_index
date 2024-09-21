@@ -14,13 +14,14 @@
 </head>
 <body class="bg-gray-100">
 <?php include 'navbar.php'; ?> <!-- Include the navbar -->
+<main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
     <header class="bg-blue-600 text-white p-4">
-        <h1 class="text-xl font-bold">Manage Sensors</h1>
+        <h1 class="text-xl font-bold text-center">Manage Sensors</h1>
     </header>
 
 
 
-    <section class="max-w-4xl mx-auto p-6 bg-white rounded shadow-md mt-6">
+    <section class="bg-white p-4 md:p-6 max-w-6xl mx-auto w-full mt-6">
         <button onclick="toggleForm()" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
             Add New Sensor
         </button>
@@ -89,5 +90,6 @@
             </table>
         </div>
     </section>
+    </main>
 </body>
 </html>

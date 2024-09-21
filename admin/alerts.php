@@ -8,8 +8,9 @@
 </head>
 <body class="bg-gray-100">
     <?php include 'navbar.php'; ?> <!-- Include the navbar -->
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
     <header class="bg-blue-600 text-white p-4">
-        <h1 class="text-2xl font-bold">Alerts Management</h1>
+        <h1 class="text-2xl font-bold text-center">Alerts Management</h1>
     </header>
 
     <section class="max-w-6xl mx-auto p-6 bg-white rounded shadow-md mt-6">
@@ -96,5 +97,7 @@
             </nav>
         </div>
     </section>
+    
+    </main>
 </body>
 </html>

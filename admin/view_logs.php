@@ -26,14 +26,14 @@ $result = $conn->query($sql);
 </head>
 <body>
 <?php include 'navbar.php'; ?> <!-- Include the navbar -->
+<main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
 
-<header>
-    <h1>View Logs</h1>
-</header>
+<header class="bg-blue-600 text-white p-4">
+        <h1 class="text-2xl font-bold text-center">View Logs</h1>
+    </header>
 
-<section>
-    <h2>Action Logs</h2>
-    <table class="min-w-full bg-white border border-gray-300 mt-4 rounded">
+<section class="p-4 md:p-6 max-w-6xl mx-auto w-full mt-6">
+    <table class="min-w-full bg-white border border-gray-300 mt-8 rounded">
         <thead>
             <tr class="bg-gray-200">
                 <th class="py-2 px-4 border">Log ID</th>
@@ -85,6 +85,8 @@ $result = $conn->query($sql);
         </div>
     </div>
 </section>
+
+</main>
 
 </body>
 </html>

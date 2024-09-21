@@ -70,6 +70,11 @@ $current_range = 'hourly'; // Set default range for active button tracking
 <body class="bg-gray-100">
     <?php include 'navbar.php'; ?>
 
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-xl font-bold text-center">Heat Index History</h1>
+    </header>
+
     <section class="max-w-6xl mx-auto p-6 bg-white rounded shadow-md mt-6">
         <h2 class="text-xl font-semibold mb-4">Average Heat Index (Heatmap)</h2>
 
@@ -127,6 +132,8 @@ $current_range = 'hourly'; // Set default range for active button tracking
             </div>
         </div>
     </section>
+
+    </main>
 
     <script>
         function showTable(range) {

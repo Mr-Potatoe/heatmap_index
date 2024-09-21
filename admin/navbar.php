@@ -6,20 +6,18 @@ $current_page = basename($_SERVER['PHP_SELF']);
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
 <!-- Responsive Navbar -->
-<nav class="bg-gray-800 shadow-md">
-    <div class="container mx-auto flex items-center justify-between p-4">
-        <!-- Logo Section -->
-        <div class="text-white text-xl font-bold">
-            <a href="dashboard.php">Welcome, <?php echo $_SESSION['admin_username']; ?></a>
+<nav id="navbar" class="bg-gray-800 text-white transition-all duration-300 ease-in-out overflow-hidden">
+    <div class="flex flex-col h-full">
+        <!-- Logo and Toggle Button Section -->
+        <div class="flex items-center justify-between p-4">
+            <a href="dashboard.php" id="navbar-logo" class="text-xl font-bold">Welcome, <?php echo $_SESSION['admin_username']; ?></a>
+            <button id="navbar-toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                <i class="fas fa-bars text-lg"></i>
+            </button>
         </div>
 
-        <!-- Mobile Menu Button -->
-        <button id="menu-btn" class="text-gray-300 md:hidden focus:outline-none focus:text-white transition-transform transform hover:scale-110">
-            <i class="fas fa-bars text-xl"></i>
-        </button>
-
         <!-- Menu Links -->
-        <ul id="menu" class="hidden md:flex space-x-6">
+        <ul id="navbar-menu" class="flex-grow hidden md:flex flex-col space-y-2 p-4">
             <?php 
             $menu_items = [
                 ['link' => 'dashboard.php', 'icon' => 'home', 'label' => 'Dashboard'],
@@ -32,25 +30,89 @@ $current_page = basename($_SERVER['PHP_SELF']);
 
             foreach ($menu_items as $item): ?>
                 <li>
-                    <a href="<?php echo $item['link']; ?>" class="flex items-center space-x-2 <?php echo $current_page == $item['link'] ? 'text-white font-bold' : 'text-gray-300'; ?> hover:text-white transition-colors duration-300">
-                        <i class="fas fa-<?php echo $item['icon']; ?>"></i>
-                        <span><?php echo $item['label']; ?></span>
+                    <a href="<?php echo $item['link']; ?>" class="flex items-center space-x-2 p-2 rounded <?php echo $current_page == $item['link'] ? 'bg-gray-700 text-white' : 'text-gray-300'; ?> hover:bg-gray-700 hover:text-white transition-colors duration-300">
+                        <i class="fas fa-<?php echo $item['icon']; ?> w-6 text-center"></i>
+                        <span class="navbar-item-label"><?php echo $item['label']; ?></span>
                     </a>
                 </li>
             <?php endforeach; ?>
             <li>
-                <a href="#" onclick="confirmLogout(event)" class="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors duration-300">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Logout</span>
+                <a href="#" onclick="confirmLogout(event)" class="flex items-center space-x-2 p-2 rounded text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-300">
+                    <i class="fas fa-sign-out-alt w-6 text-center"></i>
+                    <span class="navbar-item-label">Logout</span>
                 </a>
             </li>
         </ul>
+
+        <!-- Optional Footer/Bottom Section -->
+        <div class="p-4 mt-auto hidden md:block">
+            <p class="text-gray-400 text-sm">&copy; 2024 Heat Index Monitor</p>
+        </div>
     </div>
 </nav>
 
 <script>
+    const navbarToggle = document.getElementById('navbar-toggle');
+    const navbar = document.getElementById('navbar');
+    const navbarMenu = document.getElementById('navbar-menu');
+    const navbarLogo = document.getElementById('navbar-logo');
+    const mainContent = document.querySelector('.flex-1');
+
+    let isExpanded = true;
+
+    function toggleNavbar() {
+        if (window.innerWidth < 768) {
+            // Mobile behavior
+            navbarMenu.classList.toggle('hidden');
+        } else {
+            // Desktop behavior
+            isExpanded = !isExpanded;
+            if (isExpanded) {
+                navbar.classList.remove('w-20');
+                navbar.classList.add('w-64');
+                mainContent.classList.remove('ml-20');
+                mainContent.classList.add('ml-64');
+                document.querySelectorAll('.navbar-item-label').forEach(el => el.classList.remove('hidden'));
+            } else {
+                navbar.classList.remove('w-64');
+                navbar.classList.add('w-20');
+                mainContent.classList.remove('ml-64');
+                mainContent.classList.add('ml-20');
+                document.querySelectorAll('.navbar-item-label').forEach(el => el.classList.add('hidden'));
+            }
+        }
+    }
+
+    navbarToggle.addEventListener('click', toggleNavbar);
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+            navbarMenu.classList.remove('hidden');
+            navbar.classList.remove('w-full');
+            navbar.classList.add('w-64');
+            mainContent.classList.add('ml-64');
+        } else {
+            navbarMenu.classList.add('hidden');
+            navbar.classList.remove('w-64', 'w-20');
+            navbar.classList.add('w-full');
+            mainContent.classList.remove('ml-64', 'ml-20');
+        }
+    });
+
+    // Initialize navbar state on page load
+    window.addEventListener('load', () => {
+        if (window.innerWidth < 768) {
+            navbar.classList.add('w-full');
+            mainContent.classList.remove('ml-64', 'ml-20');
+        } else {
+            navbar.classList.add('w-64');
+            mainContent.classList.add('ml-64');
+        }
+    });
+
     function confirmLogout(event) {
-        event.preventDefault(); // Prevent the default link action
+        event.preventDefault();
         Swal.fire({
             title: 'Are you sure?',
             text: "You will be logged out of your account.",
@@ -62,34 +124,39 @@ $current_page = basename($_SERVER['PHP_SELF']);
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Redirect to logout.php if confirmed
                 window.location.href = '../php/logout.php';
             }
         });
     }
 </script>
 
-<!-- JavaScript to Toggle Menu on Mobile -->
-<script>
-    const menuBtn = document.getElementById('menu-btn');
-    const menu = document.getElementById('menu');
-
-    menuBtn.addEventListener('click', () => {
-        menu.classList.toggle('hidden');
-    });
-</script>
-
 <style>
-    /* Additional styles for modern UI/UX */
-    nav {
-        border-bottom: 2px solid #1f2937; /* Adds a subtle separation */
+    @media (max-width: 767px) {
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            height: auto;
+        }
+        #navbar-menu {
+            background-color: #1f2937;
+        }
+        .flex-1 {
+            margin-top: 60px; /* Adjust based on your navbar height */
+        }
     }
-
-    .hover\:scale-110:hover {
-        transform: scale(1.1);
-    }
-
-    .transition-colors {
-        transition: color 0.3s ease;
+    @media (min-width: 768px) {
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            width: 16rem;
+        }
+        .flex-1 {
+            margin-left: 16rem;
+        }
     }
 </style>

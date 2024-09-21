@@ -21,11 +21,13 @@ if (isset($_GET['id'])) {
 <body class="bg-gray-100">
     <?php include 'navbar.php'; ?> <!-- Include the navbar -->
 
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+
     <header class="bg-blue-600 text-white p-4">
-        <h1 class="text-xl font-bold">Edit Sensor</h1>
+        <h1 class="text-xl font-bold text-center">Edit Sensor</h1>
     </header>
 
-    <section class="max-w-4xl mx-auto p-6 bg-white rounded shadow-md mt-6">
+    <section class="bg-white p-4 md:p-6 max-w-6xl mx-auto w-full mt-6">
         <h2 class="text-2xl font-semibold mb-4">Update Sensor Information</h2>
         <form action="../php/update_sensor.php" method="POST" class="space-y-4">
             <input type="hidden" name="sensor_id" value="<?php echo $sensor['sensor_id']; ?>">
@@ -47,8 +49,13 @@ if (isset($_GET['id'])) {
                 <input type="text" id="longitude" name="longitude" value="<?php echo $sensor['longitude']; ?>" required class="mt-1 p-2 border border-gray-300 rounded w-full" />
             </div>
 
-            <button type="submit" class="mt-4 bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Update Sensor</button>
+            <div class="flex mt-4">
+                <button type="submit" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Update Sensor</button>
+                <button type="button" onclick="window.location.href='manage_sensors.php';" class="bg-gray-400 text-white p-2 ml-2 rounded hover:bg-gray-500">Cancel</button>
+            </div>
         </form>
     </section>
+
+    </main>
 </body>
 </html>
