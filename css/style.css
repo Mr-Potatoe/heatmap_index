@@ -1,0 +1,148 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+#map-container {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin: 50px auto;
+}
+
+#base-map {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+#heatmap-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* Login Form Styling */
+.login-container {
+    width: 300px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    text-align: center;
+}
+
+.login-container label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+.login-container input[type="text"], 
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    box-sizing: border-box;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2c3e50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.login-container .error-msg {
+    color: red;
+    text-align: center;
+}
+
+/* Admin Dashboard */
+header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+section {
+    margin: 20px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+ul li {
+    margin: 10px 0;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+/* for navbar */
+nav {
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 15px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+nav ul li a:hover {
+    text-decoration: underline;
+}
