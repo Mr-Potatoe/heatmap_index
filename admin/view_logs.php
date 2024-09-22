@@ -24,7 +24,7 @@ $result = $conn->query($sql);
 <head>
 <?php include 'head.php'; ?> <!-- Include the head -->
 </head>
-<body class="flex">
+<body class="flex bg-gray-100">
 <?php include 'navbar.php'; ?> <!-- Include the navbar -->
 <main id="main-content" class="flex-1 overflow-x-auto overflow-y-auto bg-gray-100 transition-all duration-300 ease-in-out">
 
@@ -33,7 +33,7 @@ $result = $conn->query($sql);
         <h1 class="text-2xl font-bold text-center">View Logs</h1>
     </header>
 
-<section class="p-4 md:p-6 max-w-6xl mx-auto w-full mt-6">
+<section class="p-4 bg-white md:p-6 max-w-6xl mx-auto w-full mt-6">
     <table class="min-w-full bg-white border border-gray-300 mt-8 rounded">
         <thead>
             <tr class="bg-gray-200">

@@ -67,7 +67,7 @@ $current_range = 'hourly'; // Set default range for active button tracking
     <?php include 'head.php'; ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
 </head>
-<body class="flex">
+<body class="flex bg-gray-100">
     <?php include 'navbar.php'; ?>
 
     <main id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 transition-all duration-300 ease-in-out">

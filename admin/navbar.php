@@ -42,9 +42,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </ul>
 
         <!-- Optional Footer/Bottom Section -->
-        <div class="p-4 mt-auto">
+        <!-- <div class="p-4 mt-auto">
             <p class="text-gray-400 text-sm">&copy; 2024 Heat Index Monitor</p>
-        </div>
+        </div> -->
     </div>
 </nav>
 

@@ -1,27 +1,21 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heat Index Map</title>
-    <link rel="stylesheet" href="css/style.css">
+<?php include './admin/head.php'; ?> <!-- Include the head -->
 </head>
-<body>
-    <header>
-        <h1>Heat Index Map - Zamboanga del Sur Provincial Government College</h1>
+<body class="flex">
+<?php include './admin/navbar.php'; ?> <!-- Include the navbar -->
+
+<main id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 transition-all duration-300 ease-in-out">
+
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-2xl font-bold text-center">Zamboanga del Sur Provincial Government College Campus Map</h1>
     </header>
-    <nav>
-        <ul>
-            <li><a href="users/dashboard.php">Dashboard</a></li>
-            <li><a href="../index.php">Map View</a></li>
-            <li><a href="users/history.php">View Heat Index History</a></li>
-        </ul>
-    </nav>
     <div id="map-container">
         <img id="base-map" src="assets/map.png" alt="Campus Map">
         <canvas id="heatmap-overlay"></canvas>
     </div>
-
-    <script src="js/script.js"></script>
+    </main>
 </body>
 </html>

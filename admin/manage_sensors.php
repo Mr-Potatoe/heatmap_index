@@ -12,7 +12,7 @@
         }
     </script>
 </head>
-<body class="flex">
+<body class="flex bg-gray-100">
 
 <?php include 'navbar.php'; ?> <!-- Include the navbar -->
 <main id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 transition-all duration-300 ease-in-out">
