@@ -67,10 +67,10 @@ $current_range = 'hourly'; // Set default range for active button tracking
     <?php include 'head.php'; ?>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" />
 </head>
-<body class="bg-gray-100">
+<body class="flex">
     <?php include 'navbar.php'; ?>
 
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+    <main id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 transition-all duration-300 ease-in-out">
     <header class="bg-blue-600 text-white p-4">
         <h1 class="text-xl font-bold text-center">Heat Index History</h1>
     </header>

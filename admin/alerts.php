@@ -6,9 +6,10 @@
 <head>
     <?php include 'head.php'; ?> <!-- Include the head -->
 </head>
-<body class="bg-gray-100">
+<body class="flex">
     <?php include 'navbar.php'; ?> <!-- Include the navbar -->
-    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+    <main id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 transition-all duration-300 ease-in-out">
+
     <header class="bg-blue-600 text-white p-4">
         <h1 class="text-2xl font-bold text-center">Alerts Management</h1>
     </header>

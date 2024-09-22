@@ -2,22 +2,19 @@
 $current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
-<!-- Include Font Awesome (Add in <head> if not already included) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-
 <!-- Responsive Navbar -->
 <nav id="navbar" class="bg-gray-800 text-white transition-all duration-300 ease-in-out overflow-hidden">
     <div class="flex flex-col h-full">
         <!-- Logo and Toggle Button Section -->
         <div class="flex items-center justify-between p-4">
-            <a href="dashboard.php" id="navbar-logo" class="text-xl font-bold">Welcome, <?php echo $_SESSION['admin_username']; ?></a>
-            <button id="navbar-toggle" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+            <a href="dashboard.php" id="navbar-logo" class="text-xl font-bold truncate">Welcome, <?php echo $_SESSION['admin_username']; ?></a>
+            <button id="navbar-toggle" class="text-gray-300 hover:text-white focus:outline-none">
                 <i class="fas fa-bars text-lg"></i>
             </button>
         </div>
 
         <!-- Menu Links -->
-        <ul id="navbar-menu" class="flex-grow hidden md:flex flex-col space-y-2 p-4">
+        <ul id="navbar-menu" class="flex-grow flex flex-col space-y-2 p-4">
             <?php 
             $menu_items = [
                 ['link' => 'dashboard.php', 'icon' => 'home', 'label' => 'Dashboard'],
@@ -45,7 +42,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </ul>
 
         <!-- Optional Footer/Bottom Section -->
-        <div class="p-4 mt-auto hidden md:block">
+        <div class="p-4 mt-auto">
             <p class="text-gray-400 text-sm">&copy; 2024 Heat Index Monitor</p>
         </div>
     </div>
@@ -73,12 +70,14 @@ $current_page = basename($_SERVER['PHP_SELF']);
                 mainContent.classList.remove('ml-20');
                 mainContent.classList.add('ml-64');
                 document.querySelectorAll('.navbar-item-label').forEach(el => el.classList.remove('hidden'));
+                navbarLogo.classList.remove('hidden');
             } else {
                 navbar.classList.remove('w-64');
                 navbar.classList.add('w-20');
                 mainContent.classList.remove('ml-64');
                 mainContent.classList.add('ml-20');
                 document.querySelectorAll('.navbar-item-label').forEach(el => el.classList.add('hidden'));
+                navbarLogo.classList.add('hidden');
             }
         }
     }
@@ -90,8 +89,8 @@ $current_page = basename($_SERVER['PHP_SELF']);
         if (window.innerWidth >= 768) {
             navbarMenu.classList.remove('hidden');
             navbar.classList.remove('w-full');
-            navbar.classList.add('w-64');
-            mainContent.classList.add('ml-64');
+            navbar.classList.add(isExpanded ? 'w-64' : 'w-20');
+            mainContent.classList.add(isExpanded ? 'ml-64' : 'ml-20');
         } else {
             navbarMenu.classList.add('hidden');
             navbar.classList.remove('w-64', 'w-20');
@@ -154,9 +153,17 @@ $current_page = basename($_SERVER['PHP_SELF']);
             left: 0;
             bottom: 0;
             width: 16rem;
+            transition: width 0.3s ease-in-out;
         }
         .flex-1 {
             margin-left: 16rem;
+            transition: margin-left 0.3s ease-in-out;
+        }
+        #navbar.w-20 {
+            width: 5rem;
+        }
+        .flex-1.ml-20 {
+            margin-left: 5rem;
         }
     }
 </style>
