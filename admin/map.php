@@ -16,7 +16,7 @@
         <h1 class="text-2xl font-bold text-center">Zamboanga del Sur Provincial Government College Campus Map</h1>
     </header>
     <div id="map-container">
-        <img id="base-map" src="../assets/map.png" alt="Campus Map">
+        <img id="base-map" src="../assets/zdspgc_map.png" alt="Campus Map">
         <canvas id="heatmap-overlay"></canvas>
     </div>
     </main>
