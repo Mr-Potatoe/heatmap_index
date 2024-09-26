@@ -18,44 +18,70 @@ if (isset($_GET['id'])) {
 <head>
     <?php include 'head.php'; ?> <!-- Include the head -->
 </head>
-<body class="flex bg-gray-100">
-    <?php include 'navbar.php'; ?> <!-- Include the navbar -->
+<body>
 
-    <main id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 transition-all duration-300 ease-in-out">
+    <!-- ======= Header ======= -->
+    <?php include 'header.php'; ?>
 
-    <header class="bg-blue-600 text-white p-4">
-        <h1 class="text-xl font-bold text-center">Edit Sensor</h1>
+
+    <!-- ======= Sidebar ======= -->
+    <?php include 'sidebar.php'; ?>
+
+    <main id="main" class="main">
+
+    <header class="bg-primary text-white p-4">
+        <h1 class="h4 text-center">Edit Sensor</h1>
     </header>
 
-    <section class="bg-white p-4 md:p-6 max-w-6xl mx-auto w-full mt-6">
-        <h2 class="text-2xl font-semibold mb-4">Update Sensor Information</h2>
-        <form action="../php/update_sensor.php" method="POST" class="space-y-4">
+    <section class="bg-white p-4 md:p-6 max-w-6xl mx-auto w-full mt-6 shadow-sm rounded">
+        <h2 class="h5 font-semibold mb-4">Update Sensor Information</h2>
+        <form action="../php/update_sensor.php" method="POST" class="needs-validation" novalidate>
             <input type="hidden" name="sensor_id" value="<?php echo $sensor['sensor_id']; ?>">
             
-            <div>
-                <label for="sensor_name" class="block text-sm font-medium text-gray-700">Sensor Name:</label>
-                <input type="text" id="sensor_name" name="sensor_name" value="<?php echo $sensor['sensor_name']; ?>" required class="mt-1 p-2 border border-gray-300 rounded w-full" />
+            <div class="mb-3">
+                <label for="sensor_name" class="form-label">Sensor Name:</label>
+                <input type="text" id="sensor_name" name="sensor_name" value="<?php echo $sensor['sensor_name']; ?>" required class="form-control" />
+                <div class="invalid-feedback">
+                    Please provide a sensor name.
+                </div>
             </div>
-            <div>
-                <label for="location" class="block text-sm font-medium text-gray-700">Location:</label>
-                <input type="text" id="location" name="location" value="<?php echo $sensor['location']; ?>" required class="mt-1 p-2 border border-gray-300 rounded w-full" />
+            <div class="mb-3">
+                <label for="location" class="form-label">Location:</label>
+                <input type="text" id="location" name="location" value="<?php echo $sensor['location']; ?>" required class="form-control" />
+                <div class="invalid-feedback">
+                    Please provide a location.
+                </div>
             </div>
-            <div>
-                <label for="latitude" class="block text-sm font-medium text-gray-700">Latitude:</label>
-                <input type="text" id="latitude" name="latitude" value="<?php echo $sensor['latitude']; ?>" required class="mt-1 p-2 border border-gray-300 rounded w-full" />
+            <div class="mb-3">
+                <label for="latitude" class="form-label">Latitude:</label>
+                <input type="text" id="latitude" name="latitude" value="<?php echo $sensor['latitude']; ?>" required class="form-control" />
+                <div class="invalid-feedback">
+                    Please provide a latitude.
+                </div>
             </div>
-            <div>
-                <label for="longitude" class="block text-sm font-medium text-gray-700">Longitude:</label>
-                <input type="text" id="longitude" name="longitude" value="<?php echo $sensor['longitude']; ?>" required class="mt-1 p-2 border border-gray-300 rounded w-full" />
+            <div class="mb-3">
+                <label for="longitude" class="form-label">Longitude:</label>
+                <input type="text" id="longitude" name="longitude" value="<?php echo $sensor['longitude']; ?>" required class="form-control" />
+                <div class="invalid-feedback">
+                    Please provide a longitude.
+                </div>
             </div>
 
-            <div class="flex mt-4">
-                <button type="submit" class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700">Update Sensor</button>
-                <button type="button" onclick="window.location.href='manage_sensors.php';" class="bg-gray-400 text-white p-2 ml-2 rounded hover:bg-gray-500">Cancel</button>
+            <div class="d-flex mt-4">
+                <button type="submit" class="btn btn-primary me-2">Update Sensor</button>
+                <button type="button" onclick="window.location.href='manage_sensors.php';" class="btn btn-secondary">Cancel</button>
             </div>
         </form>
     </section>
 
     </main>
+
+
+    <!-- footer and scroll to top -->
+    <?php include 'footer.php'; ?>
+    <!-- include scripts -->
+    <?php include 'scripts.php'; ?>
+
+
 </body>
 </html>

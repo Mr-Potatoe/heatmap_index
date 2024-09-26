@@ -6,29 +6,35 @@
 <head>
     <?php include 'head.php'; ?> <!-- Include the head -->
 </head>
-<body class="flex bg-gray-100">
-    <?php include 'navbar.php'; ?> <!-- Include the navbar -->
-    <main id="main-content" class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 transition-all duration-300 ease-in-out">
+<body>
 
-    <header class="bg-blue-600 text-white p-4">
-        <h1 class="text-2xl font-bold text-center">Alerts Management</h1>
-    </header>
+    <!-- ======= Header ======= -->
+    <?php include 'header.php'; ?>
 
-    <section class="max-w-6xl mx-auto p-6 bg-white rounded shadow-md mt-6">
-        <h2 class="text-xl font-semibold">Active Alerts</h2>
 
-        <div class="flex justify-between mb-4">
-            <a href="alerts_history.php" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View Alerts History</a>
+    <!-- ======= Sidebar ======= -->
+    <?php include 'sidebar.php'; ?>
+
+    <main id="main" class="main">
+
+        <header class="bg-primary text-white p-4">
+        <h1 class="h2 text-center">Alerts Management</h1>
+        </header>
+        <section class="container mt-4 p-4 bg-white rounded shadow">
+        <h2 class="h4 font-weight-bold">Active Alerts</h2>
+
+        <div class="d-flex justify-content-between mb-3">
+            <a href="alerts_history.php" class="btn btn-primary">View Alerts History</a>
         </div>
 
-        <table class="min-w-full bg-white border border-gray-300 mt-4 rounded">
-            <thead>
-                <tr class="bg-gray-200">
-                    <th class="py-2 px-4 border">Alert ID</th>
-                    <th class="py-2 px-4 border">Message</th>
-                    <th class="py-2 px-4 border">Timestamp</th>
-                    <th class="py-2 px-4 border">Status</th>
-                    <th class="py-2 px-4 border">Actions</th>
+        <table class="table table-bordered table-hover mt-4">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">Alert ID</th>
+                    <th scope="col">Message</th>
+                    <th scope="col">Timestamp</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,54 +57,57 @@
                 if ($alerts_result->num_rows > 0) {
                     while ($row = $alerts_result->fetch_assoc()) {
                         echo "<tr>";
-                        echo "<td class='py-2 px-4 border'>" . $row['alert_id'] . "</td>";
-                        echo "<td class='py-2 px-4 border'>" . $row['message'] . "</td>";
-                        echo "<td class='py-2 px-4 border'>" . $row['timestamp'] . "</td>";
-                        echo "<td class='py-2 px-4 border'>" . ($row['resolved'] ? 'Resolved' : 'Active') . "</td>";
-                        echo "<td class='py-2 px-4 border'>
-                                <a href='../php/resolve_alert.php?id=" . $row['alert_id'] . "' class='text-green-600 hover:underline'>Resolve</a>
-                              </td>";
+                        echo "<td>" . $row['alert_id'] . "</td>";
+                        echo "<td>" . $row['message'] . "</td>";
+                        echo "<td>" . $row['timestamp'] . "</td>";
+                        echo "<td>" . ($row['resolved'] ? 'Resolved' : 'Active') . "</td>";
+                        echo "<td>
+                                <a href='../php/resolve_alert.php?id=" . $row['alert_id'] . "' class='btn btn-success btn-sm'>Resolve</a>
+                                </td>";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='5' class='py-2 px-4 border text-center'>No active alerts found.</td></tr>";
+                    echo "<tr><td colspan='5' class='text-center'>No active alerts found.</td></tr>";
                 }
                 ?>
             </tbody>
         </table>
 
         <!-- Pagination Links -->
-        <div class="mt-4 flex justify-center items-center">
-            <nav>
-                <ul class="flex items-center">
-                    <!-- Previous Button -->
-                    <li>
-                        <a href="?page=<?php echo max(1, $page - 1); ?>" class="px-3 py-1 rounded <?php echo $page <= 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white'; ?>" <?php echo $page <= 1 ? 'disabled' : ''; ?>>Previous</a>
+        <nav class="mt-4">
+            <ul class="pagination justify-content-center">
+                <!-- Previous Button -->
+                <li class="page-item <?php echo $page <= 1 ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo max(1, $page - 1); ?>">Previous</a>
+                </li>
+
+                <?php
+                // Calculate range for pagination buttons
+                $start = max(1, $page - 1);
+                $end = min($total_pages, $page + 1);
+
+                // Display pagination buttons
+                for ($i = $start; $i <= $end; $i++): ?>
+                    <li class="page-item <?php echo ($i == $page) ? 'active' : ''; ?>">
+                        <a class="page-link" href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
                     </li>
+                <?php endfor; ?>
 
-                    <?php
-                    // Calculate range for pagination buttons
-                    $start = max(1, $page - 1);
-                    $end = min($total_pages, $page + 1);
+                <!-- Next Button -->
+                <li class="page-item <?php echo $page >= $total_pages ? 'disabled' : ''; ?>">
+                    <a class="page-link" href="?page=<?php echo min($total_pages, $page + 1); ?>">Next</a>
+                </li>
+            </ul>
+        </nav>
+        </section>
 
-                    // Display pagination buttons
-                    for ($i = $start; $i <= $end; $i++): ?>
-                        <li class="mx-1">
-                            <a href="?page=<?php echo $i; ?>" class="px-3 py-1 rounded <?php echo ($i == $page) ? 'bg-blue-600 text-white' : 'bg-gray-200'; ?>">
-                                <?php echo $i; ?>
-                            </a>
-                        </li>
-                    <?php endfor; ?>
-
-                    <!-- Next Button -->
-                    <li>
-                        <a href="?page=<?php echo min($total_pages, $page + 1); ?>" class="px-3 py-1 rounded <?php echo $page >= $total_pages ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-600 text-white'; ?>" <?php echo $page >= $total_pages ? 'disabled' : ''; ?>>Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </section>
-    
     </main>
+
+
+    <!-- footer and scroll to top -->
+    <?php include 'footer.php'; ?>
+    <!-- include scripts -->
+    <?php include 'scripts.php'; ?>
+
 </body>
 </html>

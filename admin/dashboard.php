@@ -10,186 +10,208 @@ $recent_activity_result = $conn->query($recent_activity_query);
 <head>
     <?php include 'head.php'; ?>
 </head>
-<body class="flex">
-        <!-- navbar -->
-        <?php include 'navbar.php'; ?>
-        <!-- Main Content -->
-            <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
-            <!-- Mobile Header -->
-            <header class="bg-blue-600 text-white p-4 md:hidden">
-            <h1 class="text-xl font-bold text-center">DashBoard</h1>
-            </header>
-            <header class="bg-blue-600 text-white p-4 hidden md:flex justify-between items-center">
-                
-                <h1 class="text-2xl font-bold">Dashboard</h1>
-                <!-- Quick Actions Dropdown -->
-                <div class="relative">
-                    <button id="quickActionsButton" class="flex items-center bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-800 focus:outline-none transition duration-200">
-                        Quick Actions
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-                    <div id="quickActionsDropdown" class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-md shadow-lg hidden z-40">
-                        <ul class="py-1">
-                            <li>
-                                <a href="add_sensor.php" class="block px-4 py-2 text-gray-800 hover:bg-blue-100">Add New Sensor</a>
-                            </li>
-                            <li>
-                                <a href="view_logs.php" class="block px-4 py-2 text-gray-800 hover:bg-blue-100">View Logs</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </header>
-                <section class="bg-white p-4 md:p-6 max-w-6xl mx-auto w-full mt-6">
-                    <h2 class="text-xl font-semibold mb-4">Heat Index Management</h2>
-                    <p class="text-gray-600 mb-6">This is the admin panel where you can manage sensor data and view logs.</p>
+<body>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                        <!-- Overview Cards -->
-                        <?php
-                        // Fetch total sensors
-                        $total_sensors_query = "SELECT COUNT(*) as total FROM Sensors";
-                        $total_result = $conn->query($total_sensors_query);
-                        $total_sensors = $total_result->fetch_assoc()['total'];
-            
-                        // Fetch active sensors
-                        $active_sensors_query = "SELECT COUNT(*) as active FROM Sensors WHERE status = 'active'";
-                        $active_result = $conn->query($active_sensors_query);
-                        $active_sensors = $active_result->fetch_assoc()['active'];
-            
-                        // Fetch recent heat index
-                        $recent_heat_index_query = "SELECT heat_index FROM heatindexdata ORDER BY timestamp DESC LIMIT 1";
-                        $heat_index_result = $conn->query($recent_heat_index_query);
-                        $recent_heat_index = $heat_index_result->num_rows > 0 ? $heat_index_result->fetch_assoc()['heat_index'] . '°F' : 'N/A';
-            
-                        // Fetch alerts
-                        $alerts_query = "SELECT COUNT(*) as alerts FROM alerts WHERE resolved = 0";
-                        $alerts_result = $conn->query($alerts_query);
-                        $alerts_count = $alerts_result->fetch_assoc()['alerts'];
-                        ?>
-            
+    <!-- ======= Header ======= -->
+    <?php include 'header.php'; ?>
 
-                        <div class="bg-blue-100 p-4 rounded shadow">
-                            <h3 class="font-bold text-lg">Total Sensors</h3>
-                            <p class="text-3xl font-bold"><?php echo $total_sensors; ?></p>
-                        </div>
-                        <div class="bg-green-100 p-4 rounded shadow">
-                            <h3 class="font-bold text-lg">Active Sensors</h3>
-                            <p class="text-3xl font-bold"><?php echo $active_sensors; ?></p>
-                        </div>
-                        <div class="bg-yellow-100 p-4 rounded shadow">
-                            <h3 class="font-bold text-lg">Recent Heat Index</h3>
-                            <p class="text-3xl font-bold"><?php echo $recent_heat_index; ?></p>
-                        </div>
-                        <div class="bg-red-100 p-4 rounded shadow">
-                            <h3 class="font-bold text-lg">Active Alerts</h3>
-                            <p class="text-3xl font-bold"><?php echo $alerts_count; ?></p>
-                        </div>
-                    </div>
 
-                    <!-- Heat Index Chart -->
-                    <div class="mb-8 full-width">
-                        <h3 class="font-bold text-lg mb-4">Heat Index Trends</h3>
-                        <div class="flex flex-wrap gap-2 mb-4">
-                            <button id="hourlyButton" class="chart-button bg-blue-800 text-white px-3 py-1 rounded hover:bg-blue-700 transition duration-200" onclick="updateChart('hourly', this)">Hourly</button>
-                            <button id="dailyButton" class="chart-button bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition duration-200" onclick="updateChart('daily', this)">Daily</button>
-                            <button id="weeklyButton" class="chart-button bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition duration-200" onclick="updateChart('weekly', this)">Weekly</button>
-                            <button id="monthlyButton" class="chart-button bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition duration-200" onclick="updateChart('monthly', this)">Monthly</button>
-                            <button id="yearlyButton" class="chart-button bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 transition duration-200" onclick="updateChart('yearly', this)">Yearly</button>
-                        </div>
-                        <div class="w-full h-64 md:h-96">
-                            <canvas id="heatIndexChart"></canvas>
-                        </div>
-                    </div>
+    <!-- ======= Sidebar ======= -->
+    <?php include 'sidebar.php'; ?>
 
-                    <!-- Recent Activity Log -->
-                    <div class="full-width">
-                        <h3 class="font-bold text-lg mb-4">Recent Activity</h3>
-                        <ul class="bg-gray-100 p-4 rounded mb-4">
-                            <?php
-                            if ($recent_activity_result->num_rows > 0) {
-                                while ($row = $recent_activity_result->fetch_assoc()) {
-                                    echo "<li class='mb-2'>{$row['action']} - <em>{$row['timestamp']}</em></li>";
-                                }
-                            } else {
-                                echo "<li>No recent activity found.</li>";
-                            }
-                            ?>
-                        </ul>
-                        <a href="view_logs.php" class="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">View All Logs</a>
-                    </div>
-                </section>
-            </main>
+    <main id="main" class="main">
+    <!-- Page Title -->
+    <div class="pagetitle mb-4">
+        <h1>Dashboard</h1>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <!-- Heat Index Management Header -->
+    <!-- <div class="mb-4">
+        <h2 class="h4">Heat Index Management</h2>
+        <p class="text-muted">This is the admin panel where you can manage sensor data and view logs.</p>
+    </div> -->
+    <section class="section dashboard">
+    <!-- Overview Cards -->
+    <div class="row">
+    <?php
+    // Fetch total sensors
+    $total_sensors_query = "SELECT COUNT(*) as total FROM Sensors";
+    $total_result = $conn->query($total_sensors_query);
+    $total_sensors = $total_result->fetch_assoc()['total'];
+
+    // Fetch active sensors
+    $active_sensors_query = "SELECT COUNT(*) as active FROM Sensors WHERE status = 'active'";
+    $active_result = $conn->query($active_sensors_query);
+    $active_sensors = $active_result->fetch_assoc()['active'];
+
+    // Fetch recent heat index
+    $recent_heat_index_query = "SELECT heat_index FROM heatindexdata ORDER BY timestamp DESC LIMIT 1";
+    $heat_index_result = $conn->query($recent_heat_index_query);
+    $recent_heat_index = $heat_index_result->num_rows > 0 ? $heat_index_result->fetch_assoc()['heat_index'] . '°F' : 'N/A';
+
+    // Fetch alerts
+    $alerts_query = "SELECT COUNT(*) as alerts FROM alerts WHERE resolved = 0";
+    $alerts_result = $conn->query($alerts_query);
+    $alerts_count = $alerts_result->fetch_assoc()['alerts'];
+    ?>
+
+    <!-- Card: Total Sensors -->
+    <div class="col-sm-6 col-lg-3 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted">Total Sensors</h6>
+                <p class="card-text display-4 font-weight-bold"><?php echo $total_sensors; ?></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card: Active Sensors -->
+    <div class="col-sm-6 col-lg-3 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted">Active Sensors</h6>
+                <p class="card-text display-4 font-weight-bold"><?php echo $active_sensors; ?></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card: Recent Heat Index -->
+    <div class="col-sm-6 col-lg-3 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted">Recent Heat Index</h6>
+                <p class="card-text display-4 font-weight-bold"><?php echo $recent_heat_index; ?></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card: Active Alerts -->
+    <div class="col-sm-6 col-lg-3 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body text-center">
+                <h6 class="card-title text-muted">Active Alerts</h6>
+                <p class="card-text display-4 font-weight-bold"><?php echo $alerts_count; ?></p>
+            </div>
+        </div>
+    </div>
+</div><!-- End Overview Cards -->
+
+
+<!-- Heat Index Chart -->
+<div class="mb-5">
+    <h4 class="mb-4">Heat Index Trends</h4>
+    <div class="btn-group mb-4" role="group" aria-label="Chart Filter Buttons">
+        <button id="hourlyButton" class="btn btn-outline-primary active" onclick="updateChart('hourly', this)">Hourly</button>
+        <button id="dailyButton" class="btn btn-outline-primary" onclick="updateChart('daily', this)">Daily</button>
+        <button id="weeklyButton" class="btn btn-outline-primary" onclick="updateChart('weekly', this)">Weekly</button>
+        <button id="monthlyButton" class="btn btn-outline-primary" onclick="updateChart('monthly', this)">Monthly</button>
+        <button id="yearlyButton" class="btn btn-outline-primary" onclick="updateChart('yearly', this)">Yearly</button>
+    </div>
+    <div class="chart-container" style="position: relative; height:60vh; width:100%">
+        <canvas id="heatIndexChart"></canvas>
+    </div>
+</div>
+    <!-- Recent Activity Log -->
+    <div class="mb-5">
+        <h4 class="mb-4">Recent Activity</h4>
+        <ul class="list-group mb-4">
+            <?php
+            if ($recent_activity_result->num_rows > 0) {
+                while ($row = $recent_activity_result->fetch_assoc()) {
+                    echo "<li class='list-group-item'>{$row['action']} - <em>{$row['timestamp']}</em></li>";
+                }
+            } else {
+                echo "<li class='list-group-item'>No recent activity found.</li>";
+            }
+            ?>
+        </ul>
+        <a href="view_logs.php" class="btn btn-primary">View All Logs</a>
+    </div><!-- End Recent Activity Log -->
+    </section>
+    </main>
+
+    <!-- footer and scroll to top -->
+    <?php include 'footer.php'; ?>
+    <!-- include scripts -->
+    <?php include 'scripts.php'; ?>
+
+    <!-- Heat Index Chart -->
     <script>
-         // Chart initialization and update function (unchanged)
-         const ctx = document.getElementById('heatIndexChart').getContext('2d');
-         const heatIndexChart = new Chart(ctx, {
-             type: 'line',
-             data: {
-                 labels: [],
-                 datasets: [{
-                     label: 'Heat Index',
-                     data: [],
-                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                     borderColor: 'rgba(75, 192, 192, 1)',
-                     borderWidth: 1,
-                     fill: true
-                 }]
-             },
-             options: {
-                 responsive: true,
-                 maintainAspectRatio: false,
-                 scales: {
-                     y: {
-                         beginAtZero: true
-                     }
-                 }
-             }
-         });
- 
-         function updateChart(range, button) {
-            // Fetch the new data for the selected range
-            fetch(`../php/fetch_heat_index_data.php?range=${range}`)
-                .then(response => response.json())
-                .then(data => {
-                    const labels = data.map(point => point.timestamp);
-                    const heatIndexData = data.map(point => point.heat_index);
-        
-                    heatIndexChart.data.labels = labels;
-                    heatIndexChart.data.datasets[0].data = heatIndexData;
-                    heatIndexChart.update();
-                })
-                .catch(error => console.error('Error fetching data:', error));
-        
-            // Update the active button
-            document.querySelectorAll('.chart-button').forEach(btn => {
-                btn.classList.remove('bg-blue-800', 'active'); // Remove active class from all buttons
-                btn.classList.add('bg-blue-600'); // Reset non-active buttons' colors
-            });
-        
-            // Set the clicked button as active
-            button.classList.remove('bg-blue-600');
-            button.classList.add('bg-blue-800', 'active'); // Make it darker to show it's active
+    // Chart initialization and update function
+    const ctx = document.getElementById('heatIndexChart').getContext('2d');
+    const heatIndexChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Heat Index',
+                data: [],
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
         }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            updateChart('hourly', document.getElementById('hourlyButton'));
+    });
 
-            // Quick Actions Dropdown
-            const quickActionsButton = document.getElementById('quickActionsButton');
-            const quickActionsDropdown = document.getElementById('quickActionsDropdown');
+    function updateChart(range, button) {
+        // Fetch new data for the selected range
+        fetch(`../php/fetch_heat_index_data.php?range=${range}`)
+            .then(response => response.json())
+            .then(data => {
+                const labels = data.map(point => point.timestamp);
+                const heatIndexData = data.map(point => point.heat_index);
 
-            quickActionsButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                quickActionsDropdown.classList.toggle('hidden');
-            });
+                heatIndexChart.data.labels = labels;
+                heatIndexChart.data.datasets[0].data = heatIndexData;
+                heatIndexChart.update();
+            })
+            .catch(error => console.error('Error fetching data:', error));
 
-            document.addEventListener('click', () => {
-                quickActionsDropdown.classList.add('hidden');
-            });
+        // Remove active class from all buttons and add it to the clicked one
+        document.querySelectorAll('.btn-group button').forEach(btn => {
+            btn.classList.remove('active', 'btn-primary');
+            btn.classList.add('btn-outline-primary');
         });
+
+        // Set the clicked button as active
+        button.classList.remove('btn-outline-primary');
+        button.classList.add('active', 'btn-primary');
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize with the 'hourly' chart
+        updateChart('hourly', document.getElementById('hourlyButton'));
+
+        // Quick Actions Dropdown Logic (if needed)
+        const quickActionsButton = document.getElementById('quickActionsButton');
+        const quickActionsDropdown = document.getElementById('quickActionsDropdown');
+
+        quickActionsButton?.addEventListener('click', (e) => {
+            e.stopPropagation();
+            quickActionsDropdown.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', () => {
+            quickActionsDropdown?.classList.add('hidden');
+        });
+    });
     </script>
+
 </body>
 </html>

@@ -1,116 +1,221 @@
-<?php
-$current_page = basename($_SERVER['PHP_SELF']);
-?>
 
 <!-- Responsive Navbar -->
-<nav id="navbar" class="bg-gray-800 text-white transition-all duration-300 ease-in-out overflow-hidden">
-    <div class="flex flex-col h-full">
-        <!-- Logo and Toggle Button Section -->
-        <div class="flex items-center justify-between p-4">
-            <a href="dashboard.php" id="navbar-logo" class="text-xl font-bold truncate">Welcome, <?php echo $_SESSION['admin_username']; ?></a>
-            <button id="navbar-toggle" class="text-gray-300 hover:text-white focus:outline-none">
-                <i class="fas fa-bars text-lg"></i>
-            </button>
-        </div>
+<nav class="header-nav ms-auto">
+      <ul class="d-flex align-items-center">
 
-        <!-- Menu Links -->
-        <ul id="navbar-menu" class="flex-grow flex flex-col space-y-2 p-4">
-            <?php 
-            $menu_items = [
-                ['link' => 'dashboard.php', 'icon' => 'home', 'label' => 'Dashboard'],
-                ['link' => 'map.php', 'icon' => 'map-marked-alt', 'label' => 'Heat Index Map'],
-                ['link' => 'manage_sensors.php', 'icon' => 'tools', 'label' => 'Manage Sensors'],
-                ['link' => 'history.php', 'icon' => 'history', 'label' => 'Heat Index History'],
-                ['link' => 'alerts.php', 'icon' => 'exclamation-triangle', 'label' => 'Alerts'],
-                ['link' => 'view_logs.php', 'icon' => 'file-alt', 'label' => 'View Logs'],
-            ];
+        <!-- <li class="nav-item d-block d-lg-none">
+          <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <i class="bi bi-search"></i>
+          </a>
+        </li> -->
+        <!-- End Search Icon-->
 
-            foreach ($menu_items as $item): ?>
-                <li>
-                    <a href="<?php echo $item['link']; ?>" class="flex items-center space-x-2 p-2 rounded <?php echo $current_page == $item['link'] ? 'bg-gray-700 text-white' : 'text-gray-300'; ?> hover:bg-gray-700 hover:text-white transition-colors duration-300">
-                        <i class="fas fa-<?php echo $item['icon']; ?> w-6 text-center"></i>
-                        <span class="navbar-item-label"><?php echo $item['label']; ?></span>
-                    </a>
-                </li>
-            <?php endforeach; ?>
+        <li class="nav-item dropdown">
+
+          <!-- <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-bell"></i>
+            <span class="badge bg-primary badge-number">4</span>
+          </a> -->
+
+          <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+            <li class="dropdown-header">
+              You have 4 new notifications
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
             <li>
-                <a href="#" onclick="confirmLogout(event)" class="flex items-center space-x-2 p-2 rounded text-gray-300 hover:bg-gray-700 hover:text-white transition-colors duration-300">
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-exclamation-circle text-warning"></i>
+              <div>
+                <h4>Lorem Ipsum</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>30 min. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-x-circle text-danger"></i>
+              <div>
+                <h4>Atque rerum nesciunt</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>1 hr. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-check-circle text-success"></i>
+              <div>
+                <h4>Sit rerum fuga</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>2 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="notification-item">
+              <i class="bi bi-info-circle text-primary"></i>
+              <div>
+                <h4>Dicta reprehenderit</h4>
+                <p>Quae dolorem earum veritatis oditseno</p>
+                <p>4 hrs. ago</p>
+              </div>
+            </li>
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li class="dropdown-footer">
+              <a href="#">Show all notifications</a>
+            </li>
+
+          </ul> -->
+          <!-- End Notification Dropdown Items -->
+
+        </li><!-- End Notification Nav -->
+
+        <!-- <li class="nav-item dropdown">
+
+          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+            <i class="bi bi-chat-left-text"></i>
+            <span class="badge bg-success badge-number">3</span>
+          </a>
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+            <li class="dropdown-header">
+              You have 3 new messages
+              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-1.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Maria Hudson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>Anna Nelson</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>6 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="message-item">
+              <a href="#">
+                <img src="assets/img/messages-3.jpg" alt="" class="rounded-circle">
+                <div>
+                  <h4>David Muldon</h4>
+                  <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
+                  <p>8 hrs. ago</p>
+                </div>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li class="dropdown-footer">
+              <a href="#">Show all messages</a>
+            </li>
+
+          </ul>
+
+
+        </li> -->
+        <!-- End Messages Nav -->
+
+        <li class="nav-item dropdown pe-3">
+
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+            <img src="../assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2">K. Anderson</span>
+          </a><!-- End Profile Iamge Icon -->
+
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+            <li class="dropdown-header">
+            <a href="dashboard.php" class="dropdown-item align-items-center"><?php echo $_SESSION['admin_username']; ?></a>
+              <span>Admin</span>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-person"></i>
+                <span>My Profile</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                <i class="bi bi-gear"></i>
+                <span>Account Settings</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <li>
+              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+                <i class="bi bi-question-circle"></i>
+                <span>Need Help?</span>
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <!-- Sign out -->
+            <li>
+                <a href="#" onclick="confirmLogout(event)" class="dropdown-item d-flex align-items-center">
                     <i class="fas fa-sign-out-alt w-6 text-center"></i>
-                    <span class="navbar-item-label">Logout</span>
+                    <span>Sign out</span>
                 </a>
             </li>
-        </ul>
 
-        <!-- Optional Footer/Bottom Section -->
-        <!-- <div class="p-4 mt-auto">
-            <p class="text-gray-400 text-sm">&copy; 2024 Heat Index Monitor</p>
-        </div> -->
-    </div>
-</nav>
+          </ul><!-- End Profile Dropdown Items -->
+        </li><!-- End Profile Nav -->
 
-<script>
-    const navbarToggle = document.getElementById('navbar-toggle');
-    const navbar = document.getElementById('navbar');
-    const navbarMenu = document.getElementById('navbar-menu');
-    const navbarLogo = document.getElementById('navbar-logo');
-    const mainContent = document.querySelector('.flex-1');
+      </ul>
+    </nav><!-- End Icons Navigation -->
 
-    let isExpanded = true;
-
-    function toggleNavbar() {
-        if (window.innerWidth < 768) {
-            // Mobile behavior
-            navbarMenu.classList.toggle('hidden');
-        } else {
-            // Desktop behavior
-            isExpanded = !isExpanded;
-            if (isExpanded) {
-                navbar.classList.remove('w-20');
-                navbar.classList.add('w-64');
-                mainContent.classList.remove('ml-20');
-                mainContent.classList.add('ml-64');
-                document.querySelectorAll('.navbar-item-label').forEach(el => el.classList.remove('hidden'));
-                navbarLogo.classList.remove('hidden');
-            } else {
-                navbar.classList.remove('w-64');
-                navbar.classList.add('w-20');
-                mainContent.classList.remove('ml-64');
-                mainContent.classList.add('ml-20');
-                document.querySelectorAll('.navbar-item-label').forEach(el => el.classList.add('hidden'));
-                navbarLogo.classList.add('hidden');
-            }
-        }
-    }
-
-    navbarToggle.addEventListener('click', toggleNavbar);
-
-    // Handle window resize
-    window.addEventListener('resize', () => {
-        if (window.innerWidth >= 768) {
-            navbarMenu.classList.remove('hidden');
-            navbar.classList.remove('w-full');
-            navbar.classList.add(isExpanded ? 'w-64' : 'w-20');
-            mainContent.classList.add(isExpanded ? 'ml-64' : 'ml-20');
-        } else {
-            navbarMenu.classList.add('hidden');
-            navbar.classList.remove('w-64', 'w-20');
-            navbar.classList.add('w-full');
-            mainContent.classList.remove('ml-64', 'ml-20');
-        }
-    });
-
-    // Initialize navbar state on page load
-    window.addEventListener('load', () => {
-        if (window.innerWidth < 768) {
-            navbar.classList.add('w-full');
-            mainContent.classList.remove('ml-64', 'ml-20');
-        } else {
-            navbar.classList.add('w-64');
-            mainContent.classList.add('ml-64');
-        }
-    });
-
-    function confirmLogout(event) {
+    <script>
+        function confirmLogout(event) {
         event.preventDefault();
         Swal.fire({
             title: 'Are you sure?',
@@ -128,42 +233,3 @@ $current_page = basename($_SERVER['PHP_SELF']);
         });
     }
 </script>
-
-<style>
-    @media (max-width: 767px) {
-        #navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            height: auto;
-        }
-        #navbar-menu {
-            background-color: #1f2937;
-        }
-        .flex-1 {
-            margin-top: 60px; /* Adjust based on your navbar height */
-        }
-    }
-    @media (min-width: 768px) {
-        #navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            width: 16rem;
-            transition: width 0.3s ease-in-out;
-        }
-        .flex-1 {
-            margin-left: 16rem;
-            transition: margin-left 0.3s ease-in-out;
-        }
-        #navbar.w-20 {
-            width: 5rem;
-        }
-        .flex-1.ml-20 {
-            margin-left: 5rem;
-        }
-    }
-</style>
