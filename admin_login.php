@@ -19,13 +19,18 @@ if (isset($_SESSION['admin_logged_in'])) {
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="d-flex align-items-center vh-100 bg-light">
+<body>
+
     <div class="container">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+      <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-4">
                 <div class="card shadow">
                     <div class="card-body p-4">
                         <h2 class="text-center mb-4">Admin Login</h2>
+                        
                         <form action="php/login.php" method="POST">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username</label>
@@ -50,6 +55,13 @@ if (isset($_SESSION['admin_logged_in'])) {
             </div>
         </div>
     </div>
+
+
+      </section>
+
+    </div>
+
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
